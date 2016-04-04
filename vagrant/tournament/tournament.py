@@ -58,7 +58,7 @@ def registerPlayer(name):
     conn = connect()
     cur = conn.cursor()
 
-    cur.execute("insert into players values('%s')" %(name,))
+    cur.execute("insert into players (name) values('%s')" %(name,))
 
     conn.commit()
     conn.close()
@@ -77,6 +77,13 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
+
+    conn = connect()
+    cur = conn.cursor()
+
+    cur.execute("select ")
+
+    conn.close()
 
 
 def reportMatch(winner, loser):

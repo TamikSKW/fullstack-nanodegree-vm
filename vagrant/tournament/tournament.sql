@@ -8,10 +8,10 @@
 CREATE DATABASE tournament;
 \c tournament;
 CREATE TABLE Players(
+id serial,
 name varchar,
 wins int DEFAULT 0,
-loses int DEFAULT 0,
-id serial
+loses int DEFAULT 0
 );
 
 CREATE TABLE Matches(
