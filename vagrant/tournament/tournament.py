@@ -58,7 +58,7 @@ def registerPlayer(name):
     conn = connect()
     cur = conn.cursor()
 
-    cur.execute("insert into players (name) values('%s')" %(name,))
+    cur.execute("insert into players (name) values(%s)", (name,))
 
     conn.commit()
     conn.close()
@@ -81,7 +81,9 @@ def playerStandings():
     conn = connect()
     cur = conn.cursor()
 
-    cur.execute("select ")
+    cur.execute("select id, name, wins, (wins+loses) as matches from players order by wins")
+
+    return cur.fetchall()
 
     conn.close()
 
@@ -93,6 +95,16 @@ def reportMatch(winner, loser):
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
+
+    conn = connect()
+    cur = conn.cursor()
+
+    cur.execute("insert into matches (player1, player2, victor) values(%i, %i, %i)", (winner, loser, winner,))
+    cur.execute("update players set wins = wins + 1 where id = %i", (winner,))
+    cur.execute("update players set loses = loses + 1 where id = %i" ,(loser,))
+
+    conn.commit()
+    conn.close()
  
  
 def swissPairings():
