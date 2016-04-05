@@ -14,8 +14,11 @@ def connect():
 def deleteMatches():
     """Remove all the match records from the database."""
     conn = connect()
+    cur = conn.cursor()
 
-    conn.cursor().execute("DELETE from matches *")
+    cur.execute("truncate table matches restart identity")
+    cur.execute("update players set wins = 0")
+    cur.execute("update players set loses = 0")
 
     conn.commit()
     conn.close()
