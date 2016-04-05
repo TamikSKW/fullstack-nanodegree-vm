@@ -99,9 +99,9 @@ def reportMatch(winner, loser):
     conn = connect()
     cur = conn.cursor()
 
-    cur.execute("insert into matches (player1, player2, victor) values(%i, %i, %i)", (winner, loser, winner,))
-    cur.execute("update players set wins = wins + 1 where id = %i", (winner,))
-    cur.execute("update players set loses = loses + 1 where id = %i" ,(loser,))
+    cur.execute("insert into matches (player1, player2, victor) values(%s, %s, %s)", (winner, loser, winner,))
+    cur.execute("update players set wins = wins + 1 where id = %s", (winner,))
+    cur.execute("update players set loses = loses + 1 where id = %s" ,(loser,))
 
     conn.commit()
     conn.close()
