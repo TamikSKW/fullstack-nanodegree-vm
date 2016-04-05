@@ -84,7 +84,7 @@ def playerStandings():
     conn = connect()
     cur = conn.cursor()
 
-    cur.execute("select id, name, wins, (wins+loses) as matches from players order by wins")
+    cur.execute("select id, name, wins, (wins+loses) as matches from players order by wins desc")
 
     return cur.fetchall()
 
