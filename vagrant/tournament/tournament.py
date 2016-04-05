@@ -28,7 +28,7 @@ def deletePlayers():
     """Remove all the player records from the database."""
     conn = connect()
 
-    conn.cursor().execute("DELETE from players *")
+    conn.cursor().execute("truncate table players restart identity")
 
     conn.commit()
     conn.close()
