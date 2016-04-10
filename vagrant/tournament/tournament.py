@@ -85,10 +85,13 @@ def playerStandings():
     cur = conn.cursor()
 
     cur.execute("select id, name, wins, matches from players order by wins desc")
+    standings = cur.fetchall()
 
-    return cur.fetchall()
+    cur.execute("select * from players order by id")
 
     conn.close()
+
+    return standings
 
 
 def reportMatch(winner, loser):
