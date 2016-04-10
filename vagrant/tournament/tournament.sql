@@ -11,7 +11,7 @@ CREATE TABLE Players(
 id serial,
 name varchar,
 wins int DEFAULT 0,
-loses int DEFAULT 0
+matches int DEFAULT 0
 );
 
 CREATE TABLE Matches(

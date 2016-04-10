@@ -18,7 +18,7 @@ def deleteMatches():
 
     cur.execute("truncate table matches restart identity")
     cur.execute("update players set wins = 0")
-    cur.execute("update players set loses = 0")
+    cur.execute("update players set matches = 0")
 
     conn.commit()
     conn.close()
@@ -84,7 +84,7 @@ def playerStandings():
     conn = connect()
     cur = conn.cursor()
 
-    cur.execute("select id, name, wins, (wins+loses) as matches from players order by wins desc")
+    cur.execute("select id, name, wins, matches from players order by wins desc")
 
     return cur.fetchall()
 
@@ -104,7 +104,8 @@ def reportMatch(winner, loser):
 
     cur.execute("insert into matches (player1, player2, victor) values(%s, %s, %s)", (winner, loser, winner,))
     cur.execute("update players set wins = wins + 1 where id = %s", (winner,))
-    cur.execute("update players set loses = loses + 1 where id = %s" ,(loser,))
+    cur.execute("update players set matches = matches + 1 where id = %s" ,(winner,))
+    cur.execute("update players set matches = matches + 1 where id = %s" ,(loser,))
 
     conn.commit()
     conn.close()
