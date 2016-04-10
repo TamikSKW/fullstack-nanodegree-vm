@@ -84,7 +84,7 @@ def playerStandings():
     conn = connect()
     cur = conn.cursor()
 
-    cur.execute("select id, name, wins, matches from players order by wins desc")
+    cur.execute("select id, name, wins, matches from players order by wins desc, id asc")
     standings = cur.fetchall()
 
     cur.execute("select * from players order by id")
@@ -109,6 +109,8 @@ def reportMatch(winner, loser):
     cur.execute("update players set wins = wins + 1 where id = %s", (winner,))
     cur.execute("update players set matches = matches + 1 where id = %s" ,(winner,))
     cur.execute("update players set matches = matches + 1 where id = %s" ,(loser,))
+
+    cur.execute("select * from players order by id")    
 
     conn.commit()
     conn.close()
