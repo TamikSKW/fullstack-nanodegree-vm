@@ -84,6 +84,7 @@ def playerStandings():
     conn = connect()
     cur = conn.cursor()
 
+    # because update changes row order we need to sort by wins and id
     cur.execute("select id, name, wins, matches from players order by wins desc, id asc")
     standings = cur.fetchall()
 
@@ -140,3 +141,29 @@ def swissPairings():
         pairings.append((id1, name1, id2, name2))
 
     return pairings
+
+def facedBefore(playerA, playerB):
+    """Returns True if the player ids have already faced off in this tournament.
+    If the two players have not faced off yet, then it returns False
+    """
+
+    result = False
+
+    conn = connect()
+    cur = conn.cursor()
+
+    cur.execute("select count(*) num from matches where (player1 = %(a)s or player2 = %(a)s) and (player1 = %(b)s or player2 = %(b)s)" ,{'a': playerA, 'b': playerB, })
+    check = cur.fetchone()
+    print cur.fetchone()
+    print cur.fetchone() == None
+    print check[0] == None
+    print check != None
+    if (cur.fetchone() != None):
+        result = True
+
+    #by storing the value of cur.fetchone() into a variable it changes value
+    #need to check against cur.fetchone() directly?
+
+    conn.close()
+
+    return result
