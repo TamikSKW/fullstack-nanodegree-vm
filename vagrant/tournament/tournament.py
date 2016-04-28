@@ -152,18 +152,21 @@ def facedBefore(playerA, playerB):
     conn = connect()
     cur = conn.cursor()
 
-    cur.execute("select count(*) num from matches where (player1 = %(a)s or player2 = %(a)s) and (player1 = %(b)s or player2 = %(b)s)" ,{'a': playerA, 'b': playerB, })
+    cur.execute('''select count(*) num from matches where (player1 = %(a)s or player2 = %(a)s) and (player1 = %(b)s or player2 = %(b)s)''' ,{'a': playerA, 'b': playerB, })
     check = cur.fetchone()
-    print cur.fetchone()
-    print cur.fetchone() == None
-    print check[0] == None
-    print check != None
     if (cur.fetchone() != None):
         result = True
 
     #by storing the value of cur.fetchone() into a variable it changes value
-    #need to check against cur.fetchone() directly?
+    #need to check against cur.fetchone() directly
 
     conn.close()
 
     return result
+
+def getPair(player, start=0):
+    """getPair takes in a player id number and an optional index to start from,
+     or just starts at index 0, it then finds then next likely pairing for the 
+     given player"""
+
+     '''swiss pairings should now i guess check to see if facedBefore returns false, and if so to recursively continue the list from current point to find the next suitable matchup'''
