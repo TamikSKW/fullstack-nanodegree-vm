@@ -1,0 +1,7 @@
+Each thing on this list is separated by a blank line, use word wrap to be able to read and distinguish.
+
+ToDo:
+
+implement getPair()
+
+swiss pairings should now i guess check to see if facedBefore returns false, and if so to recursively continue the list from current point to find the next suitable matchup
